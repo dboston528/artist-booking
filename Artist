@@ -1,0 +1,116 @@
+_HiStOrY_V2_
+\134q
+INSERT\040INTO\040persons\040(name)\040VALUES\040('Amy');
+SELECT\040*\040from\040persons;
+INSERT\040INTO\040persons\040(name)\040VALUES\040('DeAndre');
+SELECT\040*\040from\040persons;
+\040
+INSERT\040INTO\040todos\040(description)\040VALUES\040('Do\040a\040thing\0401')\^A;
+INSERT\040INTO\040todos\040(description)\040VALUES\040('Do\040a\040thing\0402')\^A;
+INSERT\040INTO\040todos\040(description)\040VALUES\040('Do\040a\040thing\0403')\^A;
+INSERT\040INTO\040todos\040(description)\040VALUES\040('Do\040a\040thing\0404')\^A;
+select\040*\040from\040todos;
+INSERT\040INTO\040todos\040(description)\040VALUES\040('Do\040a\040thing\0405')\^A;
+select\040*\040from\040todos;
+select\040*\040from\040todos;
+select\040*\040from\040todos;
+select\040*\040from\040todos;
+select\040*\040from\040todos;
+select\040*\040from\040todos;
+psql\040todoapp
+INSERT\040INTO\040todos\040(description)\040Values\040('Todo\0401');
+INSERT\040INTO\040todos\040(description)\040VALUES\040('Todo\0401');
+INSERT\040INTO\040todos\040(description)\040VALUES\040('Todo\0402');
+INSERT\040INTO\040todos\040(description)\040VALUES\040('Todo\0403');
+select\040*\040from\040todos;
+select\040*\040from\040todos;
+select\040*\040from\040todoapp\^A;
+SELECT\040*\040FROM\040todoapp;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todo\^ASELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todo\^ASELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todo\^ASELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todo\^ASELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+SELECT\040*\040FROM\040todos;
+insert\040into\040todolist\040(name)\040values\040('Uncategorized');
+insert\040into\040todoslist\040(name)\040values\040('Uncategorized');
+insert\040into\040todoslists\040(name)\040values\040('Uncategorized');
+insert\040into\040todolists\040(name)\040values\040('Uncategorized');
+SELECT\040*\040FROM\040todolists;
+UPDATE\040todos\040SET\040list\040id\040=\0401\040WHERE\040id\040IS\040NULL;
+UPDATE\040todos\040SET\040list_id\040=\0401\040WHERE\040id\040IS\040NULL;
+UPDATE\040todos\040SET\040list_id\040=\0401\040WHERE\040id\040IS\040NULL;
+SELECT\040*\040FROM\040todos;
+UPDATE\040todos\040SET\040list_id\040=\0401\040WHERE\040list_id\040IS\040NULL;
+SELECT\040*\040FROM\040todos;
+/dt\^A/d
+\040
+\134dt
+insert\040into\040Venue\040(city,\040state,\040address,\040phone,\040seeking_talent,\040seeking_description)\040values\040('The\040Musical\040Hop',\040'San\040Francisco',\040'CA',\040'123-123-1234',\040true,\040'We\040are\040on\040the\040lookout\040for\040a\040local\040artist\040to\040play\040every\040two\040weeks.\040Call\040us!');
+insert\040into\040Venue\040(city,\040state,\040address,\040phone,\040seeking_talent,\040seeking_description)\040values\040('The\040Musical\040Hop',\040'San\040Francisco',\040'CA',\040'123-123-1234',\040true,\040'We\040are\040on\040the\040lookout\040for\040a\040local\040artist\040to\040play\040every\040two\040weeks.\040Call\040us!');
+insert\040into\040Venue\040(city,\040state,\040address,\040phone,\040seeking_talent,\040seeking_description)\040values\040('The\040Musical\040Hop',\040'San\040Francisco',\040'CA',\040'123-123-1234',\040true,\040'We\040are\040on\040the\040lookout\040for\040a\040local\040artist\040to\040play\040every\040two\040weeks.\040Call\040us!');
+SELECT\040*\040FROM\040Venue;
+SELECT\040*\040FROM\040Venue;
+SELECT\040*\040FROM\040Artist;
+\134d\040Venues
+\134l
+\134dt
+\134dt\040Artist
+\134dt\040artist
+\134dt\040shows
+\134dt\040Venue
+\134q
+\dt
+\dt Artist
+\dt
+\q
+\dt
+UPDATE todos SET list_id = 1 WHERE list_id IS NULL;
+insert into todos (description, completed, list_id) values ('Rake leaves', f, 1);
+insert into todos (description, completed, list_id) values ('Rake leaves', false, 1);
+/dt todolists
+/d
+/dt
+\dt
+\d todolists
+SELECT * FROM todolist
+;
+select * from todolists
+;
+insert into todolists (name) values ('Uncategorized');
+insert into todos (description, completed, list_id) values ('Rake leaves', false, 1);
+insert into todos (description, completed, list_id) values ('Paint bathroom', false, 1);
+insert into todos (description, completed, list_id) values ('Clean kitchen', false, 1);
+\dt
+\dt
+\dt Artist
+\dt Artist
+\dt+
+GRANT ALL ON SCHEMA public TO postgres;
+\dt Artist
+\q
+/dt
+\dt
+\dt Artist
+\dt shows
+\q
+\dt
+\dt Artist
+\dt artist
+\q
+\dt
+\c fyyurapp
+\dt
+\dt Artist
+\s Artist

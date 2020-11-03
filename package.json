@@ -1,0 +1,23 @@
+{
+  "name": "artist-booking-site",
+  "version": "1.0.0",
+  "description": "Fyyur -----",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dboston528/artist-booking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dboston528/artist-booking/issues"
+  },
+  "homepage": "https://github.com/dboston528/artist-booking#readme",
+  "dependencies": {
+    "bootstrap": "^3.4.1"
+  }
+}
