@@ -18,11 +18,13 @@ from flask_migrate import  Migrate
 #----------------------------------------------------------------------------#
 
 app = Flask(__name__)
-moment = Moment(app)
-app.config.from_object('config')
 db = SQLAlchemy(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://fcea0478@localhost:5432/fyyurapp'
+app.config.from_object('config')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+moment = Moment(app)
+
+
+
 migrate = Migrate(app, db)
 
 # TODO: connect to a local postgresql database
@@ -45,6 +47,10 @@ class Venue(db.Model):
     genres = db.Column(db.String(120))
     seeking_talent = db.Column(db.Boolean(), default=False)
     seeking_description = db.Column(db.String(500))
+
+    def __repr__(self):
+      return f'id: {self.id}, name: {self.name}, city: {self.city}, state: {self.state}, address: {self.address}, phone: {self.phone}, image_link: {self.image_link}, facebook_link: {self.facebook_link}, website_link: {self.website_link},genres: {self.genres}, seeking_talent: {self.seeking_talent}, seeking_description: {self.seeking_description}'
+
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 

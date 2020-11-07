@@ -56,6 +56,8 @@
     "past_shows_count": 1,
     "upcoming_shows_count": 0,
   }
+"The Musical Hop",  ["Jazz", "Reggae", "Swing", "Classical", "Folk"],  "1015 Folsom Street", "San Francisco", "CA", "123-123-1234", "https://images.unsplash.com/photo-1543900694-133f37abaaa5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60", "https://www.themusicalhop.com",  "https://www.facebook.com/TheMusicalHop", True, "We are on the lookout for a local artist to play every two weeks. Please call us.", 
+
   data2={
     "id": 2,
     "name": "The Dueling Pianos Bar",
@@ -207,3 +209,6 @@ data1={
     "past_shows_count": 0,
     "upcoming_shows_count": 3,
   }
+
+    venue2=Venue(name="The Dueling Pianos Bar", genres=["Classical", "R&B", "Hip-Hop"], address= "335 Delancey Street", city="New York", state="NY", phone="914-003-1132", website_link="https://www.theduelingpianos.com", facebook_link="https://www.facebook.com/theduelingpianos", seeking_talent=False, image_link="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80")
+    venue3=Venue(name="Park Square Live Music & Coffee", genres=["Rock n Roll", "Jazz", "Classical", "Folk"], address= "335 Delancey Street", city="New York", state="NY", phone="914-003-1132", website_link="https://www.theduelingpianos.com", facebook_link="https://www.facebook.com/theduelingpianos", seeking_talent=False, image_link="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80")
