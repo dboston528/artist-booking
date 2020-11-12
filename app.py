@@ -48,6 +48,8 @@ class Venue(db.Model):
     seeking_talent = db.Column(db.Boolean(), default=False)
     seeking_description = db.Column(db.String(500))
 
+    def get_venue(self, city, state):
+      return self.query.filter(self.city==city, self.state==state).all()
     def __repr__(self):
       return f'id: {self.id}, name: {self.name}, city: {self.city}, state: {self.state}, address: {self.address}, phone: {self.phone}, image_link: {self.image_link}, facebook_link: {self.facebook_link}, website_link: {self.website_link},genres: {self.genres}, seeking_talent: {self.seeking_talent}, seeking_description: {self.seeking_description}'
 
@@ -109,7 +111,19 @@ def index():
 def venues():
   # TODO: replace with real venues data.
   #       num_shows should be aggregated based on number of upcoming shows per venue.
-  return render_template('pages/venues.html', areas=Venue.query.all())
+  areas = Venue.query.distinct('city', 'state').all()
+  data = []
+  for area in areas:
+
+    venues = Venue.query.filter(Venue.city == area.city, Venue.state == area.state).all()
+    record = {
+      'city': area.city,
+      'state': area.state,
+      'venues': [venue.get_venue(area.city, area.state) for venue in venues],
+    }
+    data.append(record)
+    print (data)
+  return render_template('pages/venues.html', areas=data)
 
 @app.route('/venues/search', methods=['POST'])
 def search_venues():
