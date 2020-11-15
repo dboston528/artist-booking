@@ -48,11 +48,8 @@ class Venue(db.Model):
     seeking_talent = db.Column(db.Boolean(), default=False)
     seeking_description = db.Column(db.String(500))
 
-    def get_venue(self, city, state):
-      return self.query.filter(self.city==city, self.state==state).all()
     def __repr__(self):
       return f'id: {self.id}, name: {self.name}, city: {self.city}, state: {self.state}, address: {self.address}, phone: {self.phone}, image_link: {self.image_link}, facebook_link: {self.facebook_link}, website_link: {self.website_link},genres: {self.genres}, seeking_talent: {self.seeking_talent}, seeking_description: {self.seeking_description}'
-
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
@@ -111,18 +108,18 @@ def index():
 def venues():
   # TODO: replace with real venues data.
   #       num_shows should be aggregated based on number of upcoming shows per venue.
-  areas = Venue.query.distinct('city', 'state').all()
-  data = []
-  for area in areas:
-
-    venues = Venue.query.filter(Venue.city == area.city, Venue.state == area.state).all()
-    record = {
-      'city': area.city,
-      'state': area.state,
-      'venues': [venue.get_venue(area.city, area.state) for venue in venues],
-    }
-    data.append(record)
-    print (data)
+  data = data=[]
+  venues = Venue.query.all()
+  for place in Venue.query.distinct(Venue.city, Venue.state).all():
+    data.append({
+      'city':place.city,
+      'state':place.state,
+      'venues':[{
+        'id': venue.id,
+        'name': venue.name,
+      } for venue in venues if
+          venue.city == place.city and venue.state == place.state]
+    })
   return render_template('pages/venues.html', areas=data)
 
 @app.route('/venues/search', methods=['POST'])
