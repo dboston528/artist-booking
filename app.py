@@ -108,7 +108,7 @@ def index():
 def venues():
   # TODO: replace with real venues data.
   #       num_shows should be aggregated based on number of upcoming shows per venue.
-  data = data=[]
+  data = []
   venues = Venue.query.all()
   for place in Venue.query.distinct(Venue.city, Venue.state).all():
     data.append({
