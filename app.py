@@ -141,13 +141,9 @@ def search_venues():
 def show_venue(venue_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
-  data = []
-  venue = Venue.query.get(venue_id)
+  data = Venue.query.get(venue_id)
   upcomingShows = db.session.query(Shows).join(Venue).filter(Shows.venue_id == venue_id).all()
-  # pastShows = 
-
-  print(upcomingShows)
-  
+  pastShows = db.session.query(Shows).join(Artist).filter(Shows.venue_id == venue_id).all()
   return render_template('pages/show_venue.html', venue=data)
 
 #  Create Venue
