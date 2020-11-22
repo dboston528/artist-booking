@@ -123,6 +123,7 @@ def venues():
       } for venue in venues if
           venue.city == place.city and venue.state == place.state]
     })
+    print(data)
   return render_template('pages/venues.html', areas=data)
 
 @app.route('/venues/search', methods=['POST'])
@@ -145,11 +146,29 @@ def show_venue(venue_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
   upcomingShows = Shows.query.join('venue').filter(Shows.venue_id == Venue.id, Shows.start_time > datetime.now()).all()
-  pastShows = Shows.query.join('venue').filter(Shows.venue_id == Venue.id, Shows.start_time < datetime.now()).all()
+  pastShows = Shows.query.join('venue').join('artist').filter(Shows.venue_id == Venue.id, Shows.start_time < datetime.now(), Shows.artist_id == Artist.id).all()
   print(f'PAST SHOWS {pastShows}')
   print(f'UPCOMING SHOWS {upcomingShows}')
   data = Venue.query.get(venue_id)
-  return render_template('pages/show_venue.html', venue=data)
+
+  testData = {
+    'id': data.id,
+    'name': data.name,
+    'city': data.city,
+    'state': data.state,
+    'address': data.address,
+    'phone': data.phone,
+    'image_link': data.image_link,
+    'facebook_link': data.facebook_link,
+    'website': data.website_link,
+    'generes': data.genres,
+    'seeking_talent': data.seeking_talent,
+    'seeking_description': data.seeking_description,
+    'upcoming_shows_count': len(upcomingShows),
+    'past_shows_count': len(pastShows)
+  }
+  print(f'TEST DATA {testData}')
+  return render_template('pages/show_venue.html', venue=testData)
 
 #  Create Venue
 #  ----------------------------------------------------------------
