@@ -78,6 +78,9 @@ class Shows(db.Model):
   artist = db.relationship(Artist, backref=db.backref('shows', cascade='all, delete' ))
   venue = db.relationship(Venue, backref=db.backref('shows', cascade='all, delete'))
 
+  def __repr__(self):
+    return f'{self.id}, artist_id:{self.artist_id}, venue_id:{self.venue_id}, start_time:{self.start_time}'
+  
 #----------------------------------------------------------------------------#
 # Filters.
 #----------------------------------------------------------------------------#
@@ -141,9 +144,11 @@ def search_venues():
 def show_venue(venue_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
+  upcomingShows = Shows.query.join('venue').filter(Shows.venue_id == Venue.id, Shows.start_time > datetime.now()).all()
+  pastShows = Shows.query.join('venue').filter(Shows.venue_id == Venue.id, Shows.start_time < datetime.now()).all()
+  print(f'PAST SHOWS {pastShows}')
+  print(f'UPCOMING SHOWS {upcomingShows}')
   data = Venue.query.get(venue_id)
-  upcomingShows = db.session.query(Shows).join(Venue).filter(Shows.venue_id == venue_id).all()
-  pastShows = db.session.query(Shows).join(Artist).filter(Shows.venue_id == venue_id).all()
   return render_template('pages/show_venue.html', venue=data)
 
 #  Create Venue
