@@ -145,12 +145,9 @@ def search_venues():
 def show_venue(venue_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
-  upcomingShows = Shows.query.join('venue').filter(Shows.venue_id == Venue.id, Shows.start_time > datetime.now()).all()
-  pastShows = Shows.query.join('venue').join('artist').filter(Shows.venue_id == Venue.id, Shows.start_time < datetime.now(), Shows.artist_id == Artist.id).all()
-  print(f'PAST SHOWS {pastShows}')
-  print(f'UPCOMING SHOWS {upcomingShows}')
+  upcomingShows = db.session.query(Artist,Shows).join(Shows).join(Venue).filter(Shows.venue_id == venue_id, Shows.artist_id == Artist.id, Shows.start_time > datetime.now()).all()
+  pastShows = db.session.query(Artist,Shows).join(Shows).join(Venue).filter(Shows.venue_id == venue_id, Shows.artist_id == Artist.id, Shows.start_time < datetime.now()).all()
   data = Venue.query.get(venue_id)
-
   testData = {
     'id': data.id,
     'name': data.name,
@@ -164,10 +161,21 @@ def show_venue(venue_id):
     'generes': data.genres,
     'seeking_talent': data.seeking_talent,
     'seeking_description': data.seeking_description,
-    'upcoming_shows_count': len(upcomingShows),
+    'past_shows': [{
+      'artist_id': artist.id,
+      'artist_name': artist.name,
+      'artist_image_link': artist.image_link,
+      'start_time': shows.start_time.strftime("%m/%d/%Y, %H:%M")
+      }for artist, shows in pastShows if shows.venue_id == data.id],
+    'upcoming_shows': [{
+      'artist_id': artist.id,
+      'artist_name': artist.name,
+      'artist_image_link': artist.image_link,
+      'start_time': shows.start_time.strftime("%m/%d/%Y, %H:%M")
+    }for artist, shows in upcomingShows if shows.venue_id == data.id],   
+    'upcoming_shows_count': len(upcomingShows) ,
     'past_shows_count': len(pastShows)
   }
-  print(f'TEST DATA {testData}')
   return render_template('pages/show_venue.html', venue=testData)
 
 #  Create Venue
@@ -203,7 +211,7 @@ def delete_venue(venue_id):
 #  ----------------------------------------------------------------
 @app.route('/artists')
 def artists():
-  # TODO: replace with real data returned from querying the database
+  # TODO: replace with real data returned from querying the database 
   data=[{
     "id": 4,
     "name": "Guns N Petals",
