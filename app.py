@@ -130,21 +130,23 @@ def search_venues():
   # TODO: implement search on artists with partial string search. Ensure it is case-insensitive.
   # seach for Hop should return "The Musical Hop".
   # search for "Music" should return "The Musical Hop" and "Park Square Live Music & Coffee"
-
   search_term=request.form.get('search_term', '')
-  venueQuery = db.session.query(Venue).all()
-  print(venueQuery)
-  print(len(venueQuery))
-  response={
-    "count": 1,
-    "data": [{
-      "id": 2,
-      "name": "The Dueling Pianos Bar",
-      "num_upcoming_shows": 0,
-    }]
-  }
-  return render_template('pages/search_venues.html', results=response, search_term=request.form.get('search_term', ''))
-
+  venueQuery = db.session.query(Venue).filter(Venue.name.ilike(f'%{search_term}%')).all()
+  response2 = {}
+  response2['count'] = len(venueQuery)
+  #declare empty list
+  response2['data']=[]
+  # traverse through venueQuery and append to the list
+  for venue in venueQuery:
+    venue_dict = {
+      'id': venue.id,
+      'name': venue.name,
+      'num_upcoming_shows': len(list(filter(lambda show: show.start_time> datetime.now(), venue.shows)))
+    }
+    response2['data'].append(venue_dict)
+  print(f'RESPONSE2 {response2}')
+  return render_template('pages/search_venues.html', results=response2, search_term=request.form.get('search_term', ''))
+  
 @app.route('/venues/<int:venue_id>')
 def show_venue(venue_id):
   # shows the venue page with the given venue_id
