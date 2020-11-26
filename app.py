@@ -5,6 +5,7 @@
 import json
 import dateutil.parser
 import babel
+import sys
 from flask import Flask, render_template, request, Response, flash, redirect, url_for
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
@@ -179,7 +180,7 @@ def show_venue(venue_id):
       'artist_image_link': artist.image_link,
       'start_time': shows.start_time.strftime("%m/%d/%Y, %H:%M")
     }for artist, shows in upcomingShows if shows.venue_id == data.id],   
-    'upcoming_shows_count': len(upcomingShows) ,
+    'upcoming_shows_count': len(upcomingShows),
     'past_shows_count': len(pastShows)
   }
   return render_template('pages/show_venue.html', venue=testData)
@@ -195,10 +196,27 @@ def create_venue_form():
 @app.route('/venues/create', methods=['POST'])
 def create_venue_submission():
   # TODO: insert form data as a new Venue record in the db, instead
+  try:
+    newVenue = Venue(
+      name =request.form.get('name', ''),
+      city =request.form.get('city', ''),
+      state =request.form.get('state', ''),
+      address =request.form.get('address', ''),
+      phone =request.form.get('phone', ''),
+      genres =request.form.getlist('genres'),
+      facebook_link =request.form.get('facebook_link', '')
+    )
+    db.session.add(newVenue)
+    db.session.commit()
+    flash('Venue ' + request.form['name'] + ' was successfully listed!')
+  except:
+    db.session.rollback()
+    print(sys.exc_info())
+    flash('An error occurred. Venue ' + request.form['name'] + ' could not be listed.')
+  finally:
+    db.session.close
   # TODO: modify data to be the data object returned from db insertion
-
   # on successful db insert, flash success
-  flash('Venue ' + request.form['name'] + ' was successfully listed!')
   # TODO: on unsuccessful db insert, flash an error instead.
   # e.g., flash('An error occurred. Venue ' + data.name + ' could not be listed.')
   # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
