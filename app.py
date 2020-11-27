@@ -224,7 +224,7 @@ def create_venue_submission():
 
 @app.route('/venues/<venue_id>', methods=['DELETE'])
 def delete_venue(venue_id):
-  
+
   deleted = Venue.query.get(venue_id)
   db.session.delete(deleted)
   db.session.commit()
@@ -240,17 +240,14 @@ def delete_venue(venue_id):
 @app.route('/artists')
 def artists():
   # TODO: replace with real data returned from querying the database 
-  data=[{
-    "id": 4,
-    "name": "Guns N Petals",
-  }, {
-    "id": 5,
-    "name": "Matt Quevedo",
-  }, {
-    "id": 6,
-    "name": "The Wild Sax Band",
-  }]
-  return render_template('pages/artists.html', artists=data)
+  data2= []
+  artists = Artist.query.all()
+  for composer in artists:
+    data2.append({
+      'id': composer.id,
+      'name': composer.name
+    })
+  return render_template('pages/artists.html', artists=data2)
 
 @app.route('/artists/search', methods=['POST'])
 def search_artists():
