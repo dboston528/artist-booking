@@ -272,6 +272,8 @@ def search_artists():
 def show_artist(artist_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
+  upcomingShows = db.session.query(Artist,Shows).join(Shows).join(Venue).filter(Shows.artist_id == artist_id, Shows.artist_id == Artist.id, Shows.start_time > datetime.now()).all()
+  print(upcomingShows)
   data1={
     "id": 4,
     "name": "Guns N Petals",
@@ -343,8 +345,10 @@ def show_artist(artist_id):
     "past_shows_count": 0,
     "upcoming_shows_count": 3,
   }
-  data = list(filter(lambda d: d['id'] == artist_id, [data1, data2, data3]))[0]
-  return render_template('pages/show_artist.html', artist=data)
+  data2 = Artist.query.get(artist_id)
+  print(data2)
+  # data = list(filter(lambda d: d['id'] == artist_id, [data1, data2, data3]))[0]
+  return render_template('pages/show_artist.html', artist=data2)
 
 #  Update
 #  ----------------------------------------------------------------
