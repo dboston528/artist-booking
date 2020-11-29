@@ -272,8 +272,10 @@ def search_artists():
 def show_artist(artist_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
-  upcomingShows = db.session.query(Artist,Shows).join(Shows).join(Venue).filter(Shows.artist_id == artist_id, Shows.artist_id == Artist.id, Shows.start_time > datetime.now()).all()
-  print(upcomingShows)
+  upcomingShows = db.session.query(Artist,Shows).join(Shows).filter(Shows.artist_id == artist_id, Shows.artist_id == Artist.id, Shows.start_time > datetime.now()).all()
+  pastShows = db.session.query(Artist,Shows).join(Shows).join(Venue).filter(Shows.artist_id == artist_id, Shows.artist_id == Artist.id, Shows.start_time < datetime.now()).all()
+  print(f'UPCOMING SHOWS {upcomingShows}')
+  print(f'PAST SHOWS{pastShows}')
   data1={
     "id": 4,
     "name": "Guns N Petals",
@@ -346,7 +348,16 @@ def show_artist(artist_id):
     "upcoming_shows_count": 3,
   }
   data2 = Artist.query.get(artist_id)
-  print(data2)
+  
+  testData = {
+    'id' : data2.id,
+    'name' : data2.name,
+    'genres': data2.genres,
+    'upcoming_shows_count': len(upcomingShows),
+    'past_shows_count': len(pastShows)
+  
+  }
+  print(testData)
   # data = list(filter(lambda d: d['id'] == artist_id, [data1, data2, data3]))[0]
   return render_template('pages/show_artist.html', artist=data2)
 
@@ -432,7 +443,7 @@ def create_artist_submission():
 def shows():
   # displays list of shows at /shows
   # TODO: replace with real venues data.
-  #       num_shows should be aggregated based on number of upcoming shows per venue.
+  # num_shows should be aggregated based on number of upcoming shows per venue.
   data=[{
     "venue_id": 1,
     "venue_name": "The Musical Hop",
