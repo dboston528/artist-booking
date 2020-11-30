@@ -353,13 +353,31 @@ def show_artist(artist_id):
     'id' : data2.id,
     'name' : data2.name,
     'genres': data2.genres,
+    "city": data2.city,
+    "state":data2.state,
+    "phone": data2.phone,
+    "seeking_venue": data2.seeking_venue,
+    "image_link":data2.image_link,
+    "facebook_link": data2.facebook_link,
+    "past_shows": [{
+      'venue_id': venue.id,
+      'venue_name': venue.name,
+      'venue_image_link': venue.image_link,
+      'start_time': shows.start_time.strftime("%m/%d/%Y, %H:%M")
+      }for  venue in pastShows if artist_id == data2.id],
+    "upcoming_shows": [{
+      'artist_id': artist.id,
+      'artist_name': artist.name,
+      'artist_image_link': artist.image_link,
+      'start_time': shows.start_time.strftime("%m/%d/%Y, %H:%M")
+      }for venue in upcomingShows if artist_id == data2.id],
     'upcoming_shows_count': len(upcomingShows),
     'past_shows_count': len(pastShows)
   
   }
   print(testData)
   # data = list(filter(lambda d: d['id'] == artist_id, [data1, data2, data3]))[0]
-  return render_template('pages/show_artist.html', artist=data2)
+  return render_template('pages/show_artist.html', artist=testData)
 
 #  Update
 #  ----------------------------------------------------------------
