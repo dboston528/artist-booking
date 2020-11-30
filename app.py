@@ -272,16 +272,9 @@ def search_artists():
 def show_artist(artist_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
-  upcomingShows = db.session.query(Artist,Shows).join(Shows).join(Venue).filter(Shows.artist_id == artist_id, Shows.venue_id == Venue.id, Shows.start_time > datetime.now()).all()
-  pastShows = db.session.query(Artist,Shows).join(Shows).join(Venue).filter(Shows.artist_id == artist_id, Shows.venue_id == Venue.id, Shows.start_time < datetime.now()).all()
   pastShows2 = db.session.query(Venue,Shows).join(Shows).filter(Shows.artist_id == artist_id, Shows.venue_id == Venue.id, Shows.start_time < datetime.now()).all()
   upcomingShows2 = db.session.query(Venue,Shows).join(Shows).filter(Shows.artist_id == artist_id, Shows.venue_id == Venue.id, Shows.start_time > datetime.now()).all()
-  print(f'UPCOMING SHOWS {upcomingShows}')
-  print(f'PAST SHOWS{pastShows}')
-  print(f'PAST SHOWS 2{pastShows2}')
-
   data2 = Artist.query.get(artist_id)
-  
   testData = {
     'id' : data2.id,
     'name' : data2.name,
