@@ -297,8 +297,8 @@ def show_artist(artist_id):
       'venue_image_link': venue.image_link,
       'start_time': shows.start_time.strftime("%m/%d/%Y, %H:%M")
       }for venue, shows in upcomingShows2 if shows.artist_id == data2.id],
-    'upcoming_shows_count': len(upcomingShows),
-    'past_shows_count': len(pastShows)
+    'upcoming_shows_count': len(upcomingShows2),
+    'past_shows_count': len(pastShows2)
   }
   return render_template('pages/show_artist.html', artist=testData)
 
