@@ -336,27 +336,31 @@ def edit_artist_submission(artist_id):
 @app.route('/venues/<int:venue_id>/edit', methods=['GET'])
 def edit_venue(venue_id):
   form = VenueForm()
-  venue={
-    "id": 1,
-    "name": "The Musical Hop",
-    "genres": ["Jazz", "Reggae", "Swing", "Classical", "Folk"],
-    "address": "1015 Folsom Street",
-    "city": "San Francisco",
-    "state": "CA",
-    "phone": "123-123-1234",
-    "website": "https://www.themusicalhop.com",
-    "facebook_link": "https://www.facebook.com/TheMusicalHop",
-    "seeking_talent": True,
-    "seeking_description": "We are on the lookout for a local artist to play every two weeks. Please call us.",
-    "image_link": "https://images.unsplash.com/photo-1543900694-133f37abaaa5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60"
-  }
+  venue=Venue.query.get(venue_id)
   # TODO: populate form with values from venue with ID <venue_id>
   return render_template('forms/edit_venue.html', form=form, venue=venue)
 
 @app.route('/venues/<int:venue_id>/edit', methods=['POST'])
 def edit_venue_submission(venue_id):
+  
   # TODO: take values from the form submitted, and update existing
   # venue record with ID <venue_id> using the new attributes
+  try:
+    editVenue = Venue.query.get(venue_id)
+    editVenue.name = request.form.get('name', '')
+    editVenue.genres = request.form.getlist('genres')
+    editVenue.city = request.form.get('city', '')
+    editVenue.state = request.form.get('state', '')
+    editVenue.phone = request.form.get('phone', '')
+    editVenue.facebook_link = request.form.get('facebook_link', '')
+    db.session.commit()
+    flash('Venue ' + request.form['name'] + ' was successfully updated!')
+  except:
+    db.session.rollback()
+    print(sys.exc_info())
+    flash('An error occurred. Artist  could not be changed for some reason.')
+  finally:
+    db.session.close
   return redirect(url_for('show_venue', venue_id=venue_id))
 
 #  Create Artist
@@ -374,9 +378,27 @@ def create_artist_submission():
   # TODO: modify data to be the data object returned from db insertion
 
   # on successful db insert, flash success
-  flash('Artist ' + request.form['name'] + ' was successfully listed!')
+  # flash('Artist ' + request.form['name'] + ' was successfully listed!')
   # TODO: on unsuccessful db insert, flash an error instead.
   # e.g., flash('An error occurred. Artist ' + data.name + ' could not be listed.')
+  try:
+    newArtist = Artist(
+      name =request.form.get('name', ''),
+      city =request.form.get('city', ''),
+      state =request.form.get('state', ''),
+      phone =request.form.get('phone', ''),
+      genres =request.form.getlist('genres'),
+      facebook_link =request.form.get('facebook_link', '')
+    )
+    db.session.add(newArtist)
+    db.session.commit()
+    flash('Artist ' + request.form['name'] + ' was successfully listed!')
+  except:
+    db.session.rollback()
+    print(sys.exc_info())
+    flash('An error occurred. Artist ' + request.form['name'] + ' could not be listed.')
+  finally:
+    db.session.close
   return render_template('pages/home.html')
 
 
