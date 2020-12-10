@@ -66,6 +66,9 @@ class Artist(db.Model):
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
     seeking_venue = db.Column(db.Boolean(), default = False)
+
+    def __repr__(self):
+      return f'id: {self.id}, name: {self.name}'
     
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
@@ -145,7 +148,6 @@ def search_venues():
       'num_upcoming_shows': len(list(filter(lambda show: show.start_time> datetime.now(), venue.shows)))
     }
     response2['data'].append(venue_dict)
-  print(f'RESPONSE2 {response2}')
   return render_template('pages/search_venues.html', results=response2, search_term=request.form.get('search_term', ''))
   
 @app.route('/venues/<int:venue_id>')
@@ -411,7 +413,6 @@ def shows():
   # TODO: replace with real venues data.
   # num_shows should be aggregated based on number of upcoming shows per venue.
   showQuery = db.session.query(Shows).all()
-  # print(showQuery)
   data2=[{
     'venue_id': show.venue_id,
     'venue_name': show.venue.name,
